@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign In / Sign Up</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div id="signInPage">
+      <h2>Sign In</h2>
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="signIn()">Sign In</button>
+      <p>Don't have an account? <a href="#" onclick="showSignUp()">Sign Up</a></p>
+    </div>
+
+    <div id="signUpPage" style="display: none;">
+      <h2>Sign Up</h2>
+      <input type="email" id="newEmail" placeholder="Email">
+      <input type="password" id="newPassword" placeholder="Password">
+      <button onclick="signUp()">Sign Up</button>
+      <p>Already have an account? <a href="#" onclick="showSignIn()">Sign In</a></p>
+    </div>
+
+    <div id="productsPage" style="display: none;">
+      <h2>Products Page</h2>
+      <!-- Add content for the products page here -->
+    </div>
+  </div>
+
+  <script>
+    // Firebase configuration (Add your Firebase SDK script here)
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Switch between Sign In and Sign Up pages
+function showSignUp() {
+  document.getElementById("signInPage").style.display = "none";
+  document.getElementById("signUpPage").style.display = "block";
+}
+
+function showSignIn() {
+  document.getElementById("signInPage").style.display = "block";
+  document.getElementById("signUpPage").style.display = "none";
+}
+
+// Sign Up function
+function signUp() {
+  const newEmail = document.getElementById("newEmail").value;
+  const newPassword = document.getElementById("newPassword").value;
+  
+  firebase.auth().createUserWithEmailAndPassword(newEmail, newPassword)
+    .then(() => {
+      // Sign up successful, show the products page
+      document.getElementById("signUpPage").style.display = "none";
+      document.getElementById("productsPage").style.display = "block";
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+// Sign In function
+function signIn() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(() => {
+      // Sign in successful, show the products page
+      document.getElementById("signInPage").style.display = "none";
+      document.getElementById("productsPage").style.display = "block";
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+  </script>
+</body>
+</html>
